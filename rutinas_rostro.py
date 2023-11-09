@@ -14,38 +14,12 @@ IMAGEN_ASOMBRADO = carpetaImgs + "Rutina 7.png"
 # Lista de rutas de imágenes
 imagenes = [IMAGEN_SIN_PALABRAS, IMAGEN_ENOJADO, IMAGEN_ASOMBRADO]
 
-# Inicializa Pygame
-pygame.init()
-
-# Dimensiones de la ventana
-window_width = 800
-window_height = 480
-
-# Crea la ventana sin bordes
-window = pygame.display.set_mode((window_width, window_height), pygame.NOFRAME)
-pygame.display.set_caption("Cambio de Imágenes")
-
-timer = pygame.time.Clock()
-expressions = cycle(imagenes)
-current = next(expressions)
-pygame.time.set_timer(pygame.USEREVENT, 1000)
-
-# Posición acumulativa de la ventana
+# Posición de inicio de la ventana
 window_position = [0, 0]
 
-# Bucle principal
-running = True
-while running:
-    
-    for e in pygame.event.get():
-        if e.type == pygame.QUIT: 
-            running = False
-        if e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
-            running = False
-        if e.type == pygame.USEREVENT:
-            current = next(expressions)
-    
+def moverVentana():
     keys = pygame.key.get_pressed()
+    
     if keys[pygame.K_LEFT]:
         window_position[0] -= 5
     if keys[pygame.K_RIGHT]:
@@ -55,17 +29,51 @@ while running:
     if keys[pygame.K_DOWN]:
         window_position[1] += 5
 
-    # Mueve la ventana
-    ctypes.windll.user32.MoveWindow(pygame.display.get_wm_info()['window'], window_position[0], window_position[1], window_width, window_height, True)
+def main():
+    # Inicializa Pygame
+    pygame.init()
 
-    imagen = pygame.image.load(current)
-    window.blit(imagen, (0, 0))
-    
-    # Muestra la ventana
-    pygame.display.flip()
-    
-    timer.tick(60)
-    pygame.display.update()
+    # Dimensiones de la ventana
+    window_width = 800
+    window_height = 480
 
-# Finaliza Pygame
-pygame.quit()
+    # Crea la ventana sin bordes
+    window = pygame.display.set_mode((window_width, window_height), pygame.NOFRAME)
+
+    timer = pygame.time.Clock()
+    expressions = cycle(imagenes)
+    current = next(expressions)
+    pygame.time.set_timer(pygame.USEREVENT, 1000)
+
+    # Bucle principal
+    running = True
+    while running:
+        
+        for e in pygame.event.get():
+            if e.type == pygame.QUIT: 
+                running = False
+            if e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
+                running = False
+            if e.type == pygame.USEREVENT:
+                current = next(expressions)
+                print(current)
+        
+        moverVentana()
+
+        # Mueve la ventana
+        ctypes.windll.user32.MoveWindow(pygame.display.get_wm_info()['window'], window_position[0], window_position[1], window_width, window_height, True)
+
+        imagen = pygame.image.load(current)
+        window.blit(imagen, (0, 0))
+        
+        # Muestra la ventana
+        pygame.display.flip()
+        
+        timer.tick(60)
+        pygame.display.update()
+
+    # Finaliza Pygame
+    pygame.quit()
+
+if __name__ == "__main__":
+    main()
