@@ -8,8 +8,8 @@ pygame.init()
 window_width = 800
 window_height = 480
 
-# Crea la ventana
-window = pygame.display.set_mode((window_width, window_height))
+# Crea la ventana sin bordes
+window = pygame.display.set_mode((window_width, window_height), pygame.NOFRAME)
 pygame.display.set_caption("Cambio de Imágenes")
 
 # Lista de rutas de imágenes
@@ -40,5 +40,6 @@ while running:
     
     timer.tick(1)
     pygame.display.update()
+
 # Finaliza Pygame
 pygame.quit()
