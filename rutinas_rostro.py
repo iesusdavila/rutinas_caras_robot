@@ -17,17 +17,21 @@ SECUENCIA_IMAGENES = [IMAGEN_SIN_PALABRAS, IMAGEN_ENOJADO, IMAGEN_ASOMBRADO]
 # Posición de inicio de la ventana
 window_position = [0, 0]
 
+# Pasos para movimiento horizontal y vertical
+pasosHorizontal = 5
+pasosVertical = 5
+
 def moverVentana():
     keys = pygame.key.get_pressed()
     
     if keys[pygame.K_LEFT]:
-        window_position[0] -= 5
+        window_position[0] -= pasosHorizontal
     if keys[pygame.K_RIGHT]:
-        window_position[0] += 5
+        window_position[0] += pasosHorizontal
     if keys[pygame.K_UP]:
-        window_position[1] -= 5
+        window_position[1] -= pasosVertical
     if keys[pygame.K_DOWN]:
-        window_position[1] += 5
+        window_position[1] += pasosVertical
 
 def main():
     # Inicializa Pygame
