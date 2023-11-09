@@ -1,82 +1,44 @@
-#!/usr/bin/env python3
 import pygame
 from itertools import cycle
 
-TILE_SIZE = 39
-#SCREEN_SIZE = pygame.Rect((0, 0, 21*TILE_SIZE, 8*TILE_SIZE))
-SCREEN_SIZE = pygame.Rect((0, 0, 800, 480))
+# Inicializa Pygame
+pygame.init()
 
-class Expression(pygame.sprite.Sprite):
-    def __init__(self, data):
-        super().__init__()
-        self.image = pygame.Surface((len(data[0]), len(data)))
-        x = y = 0
-        for row in data:
-            for col in row:
-                if col == "O":
-                    self.image.set_at((x, y), pygame.Color('firebrick3')) #firebrick2 #'dodgerblue'
-                x += 1
-            y += 1
-            x = 0
-        #self.image = pygame.transform.scale(self.image, (TILE_SIZE*len(data[0]), TILE_SIZE*len(data)))
-        self.image = pygame.transform.scale(self.image, (800, 480))
-        self.rect = self.image.get_rect()
+# Dimensiones de la ventana
+window_width = 800
+window_height = 480
 
-REGULAR = Expression([
-"                     ",
-"                     ",
-"    OOOO     OOOO    ",
-"   OOOOOO   OOOOOO   ",
-"   OOOOOO   OOOOOO   ",
-"    OOOO     OOOO    ",
-"                     ",
-"                     ",
-])
+# Crea la ventana
+window = pygame.display.set_mode((window_width, window_height))
+pygame.display.set_caption("Cambio de Imágenes")
 
-QUESTION = Expression([
-"                     ",
-"                     ",
-"    OOOO             ",
-"   OOOOOO    OOOO    ",
-"   OOOOOO   OOOOOO   ",
-"    OOOO     OOOO    ",
-"                     ",
-"                     ",
-])
+# Lista de rutas de imágenes
+imagenes = ["rostro/Initial.png", "rostro/Rutina 2.png", "rostro/Rutina 3.png"]
 
-SAD = Expression([
-"                     ",
-"                     ",
-"                     ",
-"                     ",
-"                     ",
-"   OOOOOO   OOOOOO   ",
-"                     ",
-"                     ",
-])
+timer = pygame.time.Clock()
+expressions = cycle(imagenes)
+current = next(expressions)
+pygame.time.set_timer(pygame.USEREVENT, 1000)
 
-def main():
-    pygame.init()
-    screen = pygame.display.set_mode(SCREEN_SIZE.size)
-    timer = pygame.time.Clock()
-    expressions = cycle([REGULAR, QUESTION, REGULAR, QUESTION, SAD])
-    current = next(expressions)
-    pygame.time.set_timer(pygame.USEREVENT, 1000)
-
-    while True:
-
-        for e in pygame.event.get():
-            if e.type == pygame.QUIT: 
-                return
-            if e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
-                return
-            if e.type == pygame.USEREVENT:
-                current = next(expressions)
-
-        screen.fill((30, 30, 30))
-        screen.blit(current.image, current.rect)
-        timer.tick(1)
-        pygame.display.update()
-
-if __name__ == "__main__":
-    main()
+# Bucle principal
+running = True
+while running:
+    
+    for e in pygame.event.get():
+        if e.type == pygame.QUIT: 
+            running = False
+        if e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
+            running = False
+        if e.type == pygame.USEREVENT:
+            current = next(expressions)
+            
+    imagen = pygame.image.load(current)        
+    window.blit(imagen, (0, 0))
+    
+    # Muestra la ventana
+    pygame.display.flip()
+    
+    timer.tick(1)
+    pygame.display.update()
+# Finaliza Pygame
+pygame.quit()
