@@ -12,7 +12,7 @@ IMAGEN_ENOJADO = carpetaImgs + "Rutina 6.png"
 IMAGEN_ASOMBRADO = carpetaImgs + "Rutina 7.png"
 
 # Lista de rutas de imágenes
-imagenes = [IMAGEN_SIN_PALABRAS, IMAGEN_ENOJADO, IMAGEN_ASOMBRADO]
+SECUENCIA_IMAGENES = [IMAGEN_SIN_PALABRAS, IMAGEN_ENOJADO, IMAGEN_ASOMBRADO]
 
 # Posición de inicio de la ventana
 window_position = [0, 0]
@@ -41,10 +41,10 @@ def main():
     window = pygame.display.set_mode((window_width, window_height), pygame.NOFRAME)
 
     timer = pygame.time.Clock()
-    expressions = cycle(imagenes)
+    expressions = cycle(SECUENCIA_IMAGENES)
     current = next(expressions)
     pygame.time.set_timer(pygame.USEREVENT, 1000)
-
+    
     # Bucle principal
     running = True
     while running:
@@ -56,8 +56,8 @@ def main():
                 running = False
             if e.type == pygame.USEREVENT:
                 current = next(expressions)
-                print(current)
         
+        # Mueve las ventanas por medio de teclas
         moverVentana()
 
         # Mueve la ventana
