@@ -1,6 +1,15 @@
 import pygame
 from itertools import cycle
 
+carpetaImgs = "rostro/"
+IMAGEN_SIN_PALABRAS = carpetaImgs + "Initial.png"
+IMAGEN_FELIZ = carpetaImgs + "Rutina 2.png"
+IMAGEN_MUY_FELIZ =  carpetaImgs + "Rutina 3.png"
+IMAGEN_TRISTE = carpetaImgs + "Rutina 4.png"
+IMAGEN_CANSADO = carpetaImgs + "Rutina 5.png"
+IMAGEN_ENOJADO = carpetaImgs + "Rutina 6.png"
+IMAGEN_ASOMBRADO = carpetaImgs + "Rutina 7.png"
+
 # Inicializa Pygame
 pygame.init()
 
@@ -13,12 +22,12 @@ window = pygame.display.set_mode((window_width, window_height), pygame.NOFRAME)
 pygame.display.set_caption("Cambio de Imágenes")
 
 # Lista de rutas de imágenes
-imagenes = ["rostro/Initial.png", "rostro/Rutina 2.png", "rostro/Rutina 3.png"]
+imagenes = [IMAGEN_SIN_PALABRAS, IMAGEN_ENOJADO, IMAGEN_ASOMBRADO]
 
 timer = pygame.time.Clock()
 expressions = cycle(imagenes)
 current = next(expressions)
-pygame.time.set_timer(pygame.USEREVENT, 1000)
+pygame.time.set_timer(pygame.USEREVENT, 5000)
 
 # Bucle principal
 running = True
